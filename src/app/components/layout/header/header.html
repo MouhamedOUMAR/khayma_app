@@ -1,0 +1,96 @@
+<header class="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo -->
+      <a routerLink="/" class="flex items-center space-x-2">
+        <div class="w-12 h-12 bg-gradient-to-br from-primary-500 to-desert-600 rounded-lg flex items-center justify-center">
+          <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+          </svg>
+        </div>
+        <div class="hidden md:block">
+          <h1 class="text-xl font-bold text-gray-800">Ma Vacance</h1>
+          <p class="text-xs text-gray-500">en Mauritanie</p>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <div class="hidden lg:flex items-center space-x-8">
+        <a routerLink="/" routerLinkActive="text-primary-600 font-semibold" [routerLinkActiveOptions]="{exact: true}"
+           class="text-gray-700 hover:text-primary-600 transition-colors duration-200">
+          Accueil
+        </a>
+        <a routerLink="/regions" routerLinkActive="text-primary-600 font-semibold"
+           class="text-gray-700 hover:text-primary-600 transition-colors duration-200">
+          Régions
+        </a>
+        <a routerLink="/kheymas" routerLinkActive="text-primary-600 font-semibold"
+           class="text-gray-700 hover:text-primary-600 transition-colors duration-200">
+          Kheymas
+        </a>
+        <a routerLink="/planner" routerLinkActive="text-primary-600 font-semibold"
+           class="text-gray-700 hover:text-primary-600 transition-colors duration-200">
+          Planifier
+        </a>
+        <a routerLink="/experiences" routerLinkActive="text-primary-600 font-semibold"
+           class="text-gray-700 hover:text-primary-600 transition-colors duration-200">
+          Expériences
+        </a>
+      </div>
+
+      <!-- CTA Buttons -->
+      <div class="hidden lg:flex items-center space-x-4">
+        <button class="px-4 py-2 text-primary-600 hover:text-primary-700 font-medium transition-colors">
+          Connexion
+        </button>
+        <button class="px-6 py-2 bg-gradient-to-r from-primary-500 to-desert-600 text-white rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200">
+          Réserver
+        </button>
+      </div>
+
+      <!-- Mobile Menu Button -->
+      <button (click)="toggleMenu()" class="lg:hidden p-2 text-gray-700 hover:text-primary-600">
+        <svg *ngIf="!isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+        <svg *ngIf="isMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Mobile Navigation -->
+    <div *ngIf="isMenuOpen" class="lg:hidden mt-4 pb-4 border-t border-gray-200 pt-4">
+      <div class="flex flex-col space-y-4">
+        <a routerLink="/" routerLinkActive="text-primary-600 font-semibold" [routerLinkActiveOptions]="{exact: true}"
+           (click)="toggleMenu()" class="text-gray-700 hover:text-primary-600 transition-colors">
+          Accueil
+        </a>
+        <a routerLink="/regions" routerLinkActive="text-primary-600 font-semibold"
+           (click)="toggleMenu()" class="text-gray-700 hover:text-primary-600 transition-colors">
+          Régions
+        </a>
+        <a routerLink="/kheymas" routerLinkActive="text-primary-600 font-semibold"
+           (click)="toggleMenu()" class="text-gray-700 hover:text-primary-600 transition-colors">
+          Kheymas
+        </a>
+        <a routerLink="/planner" routerLinkActive="text-primary-600 font-semibold"
+           (click)="toggleMenu()" class="text-gray-700 hover:text-primary-600 transition-colors">
+          Planifier
+        </a>
+        <a routerLink="/experiences" routerLinkActive="text-primary-600 font-semibold"
+           (click)="toggleMenu()" class="text-gray-700 hover:text-primary-600 transition-colors">
+          Expériences
+        </a>
+        <div class="flex flex-col space-y-2 pt-4 border-t border-gray-200">
+          <button class="px-4 py-2 text-primary-600 font-medium text-left">
+            Connexion
+          </button>
+          <button class="px-6 py-2 bg-gradient-to-r from-primary-500 to-desert-600 text-white rounded-lg">
+            Réserver
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
