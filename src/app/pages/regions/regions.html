@@ -1,3 +1,67 @@
+<!-- Image Gallery Modal -->
+<div *ngIf="showGallery" class="fixed inset-0 z-50 bg-black bg-opacity-95 flex items-center justify-center">
+  <!-- Close Button -->
+  <button
+    (click)="closeGallery()"
+    class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
+  >
+    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+    </svg>
+  </button>
+
+  <!-- Region Name -->
+  <div class="absolute top-4 left-4 text-white z-10">
+    <h2 class="text-3xl font-bold">{{ currentRegionName }}</h2>
+    <p class="text-sm opacity-75">Image {{ currentImageIndex + 1 }} sur {{ currentGalleryImages.length }}</p>
+  </div>
+
+  <!-- Previous Button -->
+  <button
+    *ngIf="currentGalleryImages.length > 1"
+    (click)="previousImage()"
+    class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+    </svg>
+  </button>
+
+  <!-- Image -->
+  <div class="max-w-6xl max-h-screen p-4">
+    <img
+      [src]="currentImage"
+      [alt]="currentRegionName"
+      class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+    />
+  </div>
+
+  <!-- Next Button -->
+  <button
+    *ngIf="currentGalleryImages.length > 1"
+    (click)="nextImage()"
+    class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors bg-black bg-opacity-50 rounded-full p-3 hover:bg-opacity-75"
+  >
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+
+  <!-- Thumbnails -->
+  <div *ngIf="currentGalleryImages.length > 1" class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 bg-black bg-opacity-50 p-2 rounded-lg">
+    <div
+      *ngFor="let img of currentGalleryImages; let i = index"
+      (click)="currentImageIndex = i"
+      class="w-16 h-16 cursor-pointer rounded overflow-hidden transition-all"
+      [class.ring-4]="i === currentImageIndex"
+      [class.ring-primary-500]="i === currentImageIndex"
+      [class.opacity-50]="i !== currentImageIndex"
+    >
+      <img [src]="img" [alt]="'Thumbnail ' + (i + 1)" class="w-full h-full object-cover" />
+    </div>
+  </div>
+</div>
+
 <!-- Page Header -->
 <section class="bg-gradient-to-r from-primary-600 to-desert-600 text-white py-16">
   <div class="container mx-auto px-4">
@@ -10,96 +74,42 @@
 <section class="py-16 bg-gray-50">
   <div class="container mx-auto px-4">
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Region 1 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-primary-400 to-desert-500 flex items-center justify-center text-white text-4xl font-bold">
-          Adrar
+      <!-- Dynamic Region Cards -->
+      <div
+        *ngFor="let region of regions"
+        class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 cursor-pointer"
+      >
+        <div class="h-64 bg-gray-200 overflow-hidden relative group">
+          <img
+            [src]="region.mainImage"
+            [alt]="region.name"
+            class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+          <div class="absolute bottom-4 left-4 text-white">
+            <h3 class="text-3xl font-bold drop-shadow-lg">{{ region.name }}</h3>
+          </div>
+          <!-- Photo count badge -->
+          <div class="absolute top-4 right-4 bg-black bg-opacity-70 text-white px-3 py-1 rounded-full text-sm flex items-center gap-1">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            {{ region.galleryImages.length }}
+          </div>
         </div>
         <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-3">Adrar</h3>
-          <p class="text-gray-600 mb-4">
-            Découvrez les dunes de sable doré et les oasis verdoyantes de la région d'Adrar. Une expérience désertique inoubliable vous attend.
+          <p class="text-gray-600 mb-4 line-clamp-3">
+            {{ region.description }}
           </p>
-          <button class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            Explorer
-          </button>
-        </div>
-      </div>
-
-      <!-- Region 2 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-desert-400 to-primary-500 flex items-center justify-center text-white text-4xl font-bold">
-          Tagant
-        </div>
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-3">Tagant</h3>
-          <p class="text-gray-600 mb-4">
-            Plateaux rocheux et vallées verdoyantes caractérisent cette région au patrimoine culturel riche.
-          </p>
-          <button class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            Explorer
-          </button>
-        </div>
-      </div>
-
-      <!-- Region 3 -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-primary-500 to-desert-400 flex items-center justify-center text-white text-4xl font-bold">
-          Trarza
-        </div>
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-3">Trarza</h3>
-          <p class="text-gray-600 mb-4">
-            Entre fleuve Sénégal et océan Atlantique, Trarza offre des paysages variés et une biodiversité unique.
-          </p>
-          <button class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            Explorer
-          </button>
-        </div>
-      </div>
-
-      <!-- More regions... -->
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-desert-500 to-primary-400 flex items-center justify-center text-white text-4xl font-bold">
-          Inchiri
-        </div>
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-3">Inchiri</h3>
-          <p class="text-gray-600 mb-4">
-            Région minière par excellence avec des paysages désertiques spectaculaires.
-          </p>
-          <button class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            Explorer
-          </button>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-primary-400 to-desert-600 flex items-center justify-center text-white text-4xl font-bold">
-          Gorgol
-        </div>
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-3">Gorgol</h3>
-          <p class="text-gray-600 mb-4">
-            Agriculture florissante et traditions ancestrales dans la vallée du fleuve Sénégal.
-          </p>
-          <button class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            Explorer
-          </button>
-        </div>
-      </div>
-
-      <div class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300">
-        <div class="h-48 bg-gradient-to-br from-desert-400 to-primary-600 flex items-center justify-center text-white text-4xl font-bold">
-          Hodh
-        </div>
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-3">Hodh Echargui & Hodh Gharbi</h3>
-          <p class="text-gray-600 mb-4">
-            Vastes étendues sahariennes et sites archéologiques fascinants.
-          </p>
-          <button class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors">
-            Explorer
+          <button
+            (click)="openGallery(region)"
+            class="w-full px-6 py-3 bg-gradient-to-r from-primary-600 to-desert-600 text-white rounded-lg hover:shadow-lg transform hover:-translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+            </svg>
+            Explorer la galerie
           </button>
         </div>
       </div>
