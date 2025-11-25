@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-kheymas',
@@ -7,5 +8,14 @@ import { Component } from '@angular/core';
   styleUrl: './kheymas.scss',
 })
 export class Kheymas {
+  constructor(private router: Router) {}
 
+  reserveKheyma(kheymaName: string, price: number) {
+    this.router.navigate(['/reservation'], {
+      queryParams: {
+        kheyma: kheymaName,
+        price: price
+      }
+    });
+  }
 }

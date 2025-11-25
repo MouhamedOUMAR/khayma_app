@@ -5,6 +5,8 @@ import { Kheymas } from './pages/kheymas/kheymas';
 import { Planner } from './pages/planner/planner';
 import { Experiences } from './pages/experiences/experiences';
 import { Admin } from './pages/admin/admin';
+import { Login } from './pages/login/login';
+import { Reservation } from './pages/reservation/reservation';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -13,5 +15,7 @@ export const routes: Routes = [
   { path: 'planner', component: Planner },
   { path: 'experiences', component: Experiences },
   { path: 'admin', component: Admin },
+  { path: 'login', component: Login },
+  { path: 'reservation', component: Reservation },
   { path: '**', redirectTo: '' }
 ];
