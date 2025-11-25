@@ -52,9 +52,9 @@ export class Regions {
     {
       name: 'Inchiri',
       description: 'Région minière par excellence avec des paysages désertiques spectaculaires et des formations rocheuses uniques.',
-      mainImage: 'images/regions/tagant-1.jpg',
+      mainImage: 'images/regions/mrt.jpg',
       galleryImages: [
-        'images/regions/tagant-1.jpg'
+        'images/regions/mrt.jpg'
       ]
     },
     {
